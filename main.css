@@ -1,0 +1,86 @@
+:root {
+    --iconRotation: rotate(0);
+}
+
+#map {
+    width: 60%;
+    height: 80%;
+    margin: 10px 20%;
+}
+
+#bigtitle {
+    margin: auto 20%;
+    font-size: 300%;
+}
+#title {
+    margin: auto 20%;
+    font-size: 300%;
+    margin-top: 40px;
+}
+
+#howToUse {
+    height: 40px;
+    font-size: 180%;
+    display: inline-flex;
+    padding: 0;
+    border: none;
+    outline: none;
+    
+}
+
+#basictxt {
+    font-size: 180%;
+    display: inline-flex;
+    padding: 0;
+    border: none;
+    outline: none;
+}
+#Res {
+    font-size: 180%;
+    display: inline-flex;
+    padding: 0;
+    border: none;
+    outline: none;
+    margin-left: 20%;
+}
+#basictxtS {
+    font-size: 180%;
+    display: inline-flex;
+    padding: 0;
+    border: none;
+    outline: none;
+}
+
+#buttonBase {
+    margin: 10px 20%;
+    width: 60%;
+    height: 40px;
+    display: inline-flex;
+    padding: 0;
+    border: none;
+    outline: none;
+}
+
+#moreInfo {
+    background-color: white;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    padding: 0;
+    border: none;
+    outline: none;
+}
+
+#butIcon {
+    width: 40px;
+    height: 40px;
+    transform: var(--iconRotation);
+}
+
+#sulMeoung {
+    background-color: rgb(250, 250, 250);
+    width: 60%;
+    height: 18%;
+    margin-left: 20%;
+    display: none;
+}
