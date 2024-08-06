@@ -9,11 +9,11 @@
 }
 
 #bigtitle {
-    margin: auto 20%;
+    margin: auto 10%;
     font-size: 300%;
 }
 #title {
-    margin: auto 20%;
+    margin: auto 10%;
     font-size: 300%;
     margin-top: 40px;
 }
@@ -41,7 +41,8 @@
     padding: 0;
     border: none;
     outline: none;
-    margin-left: 20%;
+    margin-left: 10%;
+    width: 80%;
 }
 #basictxtS {
     font-size: 180%;
@@ -52,8 +53,8 @@
 }
 
 #buttonBase {
-    margin: 10px 20%;
-    width: 60%;
+    margin: 10px 10%;
+    width: 80%;
     height: 40px;
     display: inline-flex;
     padding: 0;
@@ -79,8 +80,8 @@
 
 #sulMeoung {
     background-color: rgb(250, 250, 250);
-    width: 60%;
-    height: 18%;
-    margin-left: 20%;
+    width: 80%;
+    height: 25%;
+    margin-left: 10%;
     display: none;
 }
