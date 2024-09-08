@@ -160,8 +160,8 @@ h3 {
     }
     #total {
         margin-top: 0;
-        font-size: 25px;
-        line-height: 30px;
+        font-size: 10px;
+        line-height: 15px;
     }
     
     #infoIcon {
@@ -195,7 +195,7 @@ h3 {
     }
     
     #DistanceButton {
-        width: 200px;
+        width: 100px;
         border: 2px solid black;
         padding: 0;
         border-radius: 10px; 
