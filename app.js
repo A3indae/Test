@@ -202,10 +202,10 @@ function calculateThings(){
   let RelTime = Times[Case2] - Times[Case1]
 
   if (RelGram<0){
-    document.getElementById("resultG").innerText = "그리고 "+Math.round(-RelGram)+"g의 탄소 덜 사용됨."
+    document.getElementById("resultG").innerText = "그리고 "+Math.round(-RelGram)+"g의 탄소 덜 배출됨."
   }
   else {
-    document.getElementById("resultG").innerText = "그리고 "+Math.round(RelGram)+"g의 탄소 더 사용됨."
+    document.getElementById("resultG").innerText = "그리고 "+Math.round(RelGram)+"g의 탄소 더 배출됨."
   }
 
   if (RelTime<0){
