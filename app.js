@@ -11,6 +11,8 @@ let Case2 = 1
 
 let Times = [0,0,0]
 let Grams = [0,0,0]
+
+let time = 0
 async function initMap() {
     //기본설정ㄹ
 
@@ -48,6 +50,15 @@ async function initMap() {
 
     //마커
     map.addListener("click", (e) => {
+
+        let now = new Date();
+        let minutes = now.getMinutes() * 60 * 1000
+        let seconds = now.getSeconds() * 1000
+        let milliseconds = now.getMilliseconds()
+
+        if (minutes + seconds + milliseconds - time < 1000) {return}
+        time = minutes + seconds + milliseconds
+
         if (IsAttachment0) {Attachment0.position = e.latLng} else {Attachment1.position = e.latLng}
         calcRoute();
         IsAttachment0 = !IsAttachment0
