@@ -1,77 +1,52 @@
-<html lang="kr">
+<html lang="kr"></html>
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TEST</title>
+  <title>Project: CO2</title>
   <link rel="stylesheet" href="main.css">
 </head>
 
 <body>
-  <h1 id="bigtitle">*Please 데스크톱 사이트를 켜 주세요*</h1>
-  <h1 id="title">탄소 배출량 계산기</h1>
+  <h1 class="title">탄소 배출량 계산기</h1>
+  
+  <div class = "moreInfo">
+    <span id="infoButton">
+        <ion-icon name="chevron-forward-outline" id="infoIcon"></ion-icon>
+    </span>
+    <strong>사용 방법</strong>
+  </div>
+  
+  <div id = "description">
+    <p class="ToggleInfo">1.지도를 터치하여 출발지와 목적지에 핑을 찍을 수 있다.</p>
+    <p class="ToggleInfo">2.두 지점이 유효할 경우, 경로가 계산된다.</p>
+    <p class="ToggleInfo">3.해단 경로를 바탕으로 거리가 구해진다.</p>
+    <p class="ToggleInfo">4.구한 거리를 바탕으로 이동수단 별 탄소배출량이 계산된다.</p>
+    <p class="ToggleInfo">5.이동수단 별 탄소배출량을 서로 비교해 볼 수 있다.</p>
+  </div>
 
-  <div id = "buttonBase">
-    <button type="button" id="moreInfo"> 
-      <ion-icon name="chevron-forward-outline" id="butIcon"></ion-icon>
-    </button>
-    <span id="howToUse">사용 방법</span>
-  </div>
-  
-  <div id = "sulMeoung">
-    <p id="ToggleInfo">1.지도를 터치하여 출발지와 목적지에 핑 찍기</p>
-    <p id="ToggleInfo">1-1.두 지점이 비정상적인 위치에 있으면 경로가 생성되지 않음</p>
-    <p id="ToggleInfo">2.경로가 생성되면 아래에 이동수단별 탄소배출량이 표시됨</p>
-    <p id="ToggleInfo">3.맨 아래 항목에서 이동수단별로 탄소배출량을 비교해볼 수 있음</p>
-    <p id="ToggleInfo">4.할모닝의 탄소 배출량은 1g/m</p>
-    <p id="ToggleInfo">웹개발은 처음입니다. 만일 페이지가 올바르지 않다면 가로로 봐주시길</p>
-  </div>
-  <style>#ToggleInfo {color: gray; font-size: 120%;}</style>
-  
   <div id="map"></div>
 
-  <button type="button" id="Acc" style="width: 80%; margin-left: 10%; height: 5%;"><span style="font-size: 180%;" id = "ASDASDASD">거리 정확성: 높음</span></button>
-  <p style="font-size: 200%; margin-left: 10%;">한국은 정확한 거리가 표시되지 않습니다.</p>
-
-  <h1 id="title">이동수단과 탄소배출량</h1>
-
-  <table id = "tble">
-    <tr><td>비행기를 이용할 경우</td><td id = "plane">0g</td></tr>
-    <tr><td>자동차를 이용할 경우</td><td id = "car">0g</td></tr>
-    <tr><td>걸어갈 경우</td><td>0g</td></tr>
-    <tr><td>할모닝을 이용할 경우</td><td id = "halmony">0g</td></tr>
-  </table>
-  <style> #tble {width: 80%; margin-left: 10%; font-size: 180%; border-collapse: collapse;} </style>
-
-  <h1 id="title">만일...</h1>
-
-  <div id = "SBOX">
-    <form>
-      <label for="carA"></label>
-      <select id="carA" name="carA" onchange="AChanged()">
-          <option value=0>비행기</option>
-          <option value=1 selected>자동차</option>
-          <option value=2>걷기</option>
-          <option value=3>할모닝</option>
-      </select>
-    </form>
-    <span id="basictxt">대신</span>
-    <form>
-      <label for="carB"></label>
-      <select id="carB" name="carB" onchange="BChanged()">
-          <option value=0>비행기</option>
-          <option value=1 selected>자동차</option>
-          <option value=2>걷기</option>
-          <option value=3>할모닝</option>
-      </select>
-    </form>
-    <span id="basictxtS">를 이용한다면 :</span>
+  <div id="totalAndOther">
+    <h1 id="Total">총 거리: 0m</h1>
+    <button type="button" id="DistanceButton">거리 정확성: 높음</input>
   </div>
-  <span id="Res">0g의 탄소가 절약됩니다.</span>
-  <style>#SBOX {width: 80%; height: 50px; margin-left: 10%; display: inline-flex; padding: 0; border: none; outline: none;} #carA {width:150px; height: 50px; font-size: 40px;} #carB {width:150px; height: 50px; font-size: 40px;} </style>
 
-  <div id = "nothing"></div>
-  <style>#nothing {height: 50%;}</style>
+  <h1>이동수단별 탄소배출량과 소요시간</h1>
+  <h2 id="caseCar">자가용을 이용하였을 때: 0g, 0분</h2>
+  <h2 id="caseBus">대중교통을 이용하였을 때: 0g, 0분</h2>
+  <h2 id="caseWalk">걸어간다면: 0분</h2>
+
+  <h1>만일</h1>
+  <div style="margin-left: 1em; display: flex; align-items: center;" id="ListCase">
+    <button type="button" id = "ifMove1">자가용</button>
+    대신
+    <button type="button" id = "ifMove2">대중교통</button>
+    <span id="ulll">을</span>이용한다면
+  </div>
+  <h2 id = "resultT">0분 더 소요됨.</h2>
+  <h2 id = "resultG">그리고 0g의 탄소 덜 사용됨.</h2>
+
 
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALun7ste0wHgHJdltfU8XYFvCwlrApdLg&libraries=places&v=weekly&libraries=marker&loading=async&callback=initMap" defer> </script>
   <script src="app.js"></script>

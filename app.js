@@ -1,21 +1,26 @@
-//이거요
-const vehs = [.2, .07, 0, 1] //비행기, 자동차, 도보, 할모닝
-var D = 0
-const selectElement1 = document.getElementById("carA");
-const selectElement2 = document.getElementById("carB");
 
+const carPerMeter = .2255
+const busPerMeter = .1331
+
+const busSpeed = 800/3
+const carSpeed = 500
+const humanSpeed = 200/3
+
+let Case1 = 0
+let Case2 = 1
+
+let Times = [0,0,0]
+let Grams = [0,0,0]
 async function initMap() {
-
     //기본설정ㄹ
+
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
     const { Map } = await google.maps.importLibrary("maps");
-    var directionsService = new google.maps.DirectionsService();
-    var directionsRenderer = new google.maps.DirectionsRenderer();
+    let directionsService = new google.maps.DirectionsService();
+    let directionsRenderer = new google.maps.DirectionsRenderer();
 
-    var IsOne = true;
-    var Extented = false;
-
-    var routeMode = 'DRIVING'
+    let IsAttachment0 = true;
+    let routeMode = 'DRIVING'
 
     const mapOptions = {
         center: {lat: 39, lng: 125},
@@ -32,28 +37,28 @@ async function initMap() {
     const map = new Map(document.getElementById("map"), mapOptions)
     directionsRenderer.setMap(map);
 
-    var Attachment0 = new AdvancedMarkerElement({
+    let Attachment0 = new AdvancedMarkerElement({
         map,
         position: { lat: 38.5023713788343, lng: 125.76390677172103},
       });
-      var Attachment1 = new AdvancedMarkerElement({
+      let Attachment1 = new AdvancedMarkerElement({
         map,
         position: { lat: 39.03430015157314, lng: 125.76240577936426},
-      });
+    });
 
     //마커
     map.addListener("click", (e) => {
-        if (IsOne) {Attachment0.position = e.latLng} else {Attachment1.position = e.latLng}
+        if (IsAttachment0) {Attachment0.position = e.latLng} else {Attachment1.position = e.latLng}
         calcRoute();
-        IsOne = !IsOne
+        IsAttachment0 = !IsAttachment0
     });
 
     //펑션!
     function getTotalDistance(result) {
-      var totalDistance = 0;
+      let totalDistance = 0;
       const route = result.routes[0];
 
-      for (var i = 0; i < route.legs.length; i++) {
+      for (let i = 0; i < route.legs.length; i++) {
         totalDistance += route.legs[i].distance.value;
       }
       return totalDistance;
@@ -61,9 +66,9 @@ async function initMap() {
 
     function calcRoute() {
       directionsRenderer.set('directions', null);
-      var start = Attachment0.position;
-      var end = Attachment1.position;
-      var request = {
+      let start = Attachment0.position;
+      let end = Attachment1.position;
+      let request = {
         origin: start,
         destination: end,
         travelMode: routeMode
@@ -72,49 +77,130 @@ async function initMap() {
         console.log(status)
         if (status == 'OK') {
           directionsRenderer.setDirections(result);
-          D = getTotalDistance(result);
-          console.log(D);
-          document.getElementById("plane").innerText = "약 " + (D * vehs[0]) + "g"
-          document.getElementById("car").innerText = "약 " + (D * vehs[1]) + "g"
-          document.getElementById("halmony").innerText = "약 " + (D * vehs[3]) + "g"
-          DisplayResult()
+          let D = getTotalDistance(result);
+          
+          if (D>10000){
+            document.getElementById("Total").innerText = "총 거리: "+ (Math.round(D/100)/10) +"km"
+          }
+          else{
+            document.getElementById("Total").innerText = "총 거리: "+D+"m"
+          }
+          DisplayResult(D)
         }
       });
     }
 
-    //기타등등
-    const targetElement = document.querySelector("#butIcon");
+    //설명서
+    let Extented = false;
+    const infoButton = document.getElementById('infoButton');
+    const description = document.getElementById('description');
 
-    const info = document.getElementById("sulMeoung")
-
-    const infoButton = document.getElementById("moreInfo")
-    infoButton.addEventListener("click", function() {
-      if (Extented) {info.style.display = "none"; targetElement.style.setProperty("--iconRotation", "rotate(0)");} else {info.style.display = "block"; targetElement.style.setProperty("--iconRotation", "rotate(90deg)");}
-      Extented = !Extented
+    infoButton.addEventListener('click', function() {
+        if (Extented){
+            this.style.transform = 'rotate(0deg)'
+            description.style.height = '0px'
+            description.style.opacity = 0
+        }
+        else{
+            this.style.transform = 'rotate(90deg)'
+            description.style.height = '5em'
+            description.style.opacity = 1
+        }
+        Extented = !Extented
     })
-    const DButton = document.getElementById("Acc")
+
+    //정확도
+    const DButton = document.getElementById("DistanceButton")
     DButton.addEventListener("click", function() {
-      if (routeMode == "DRIVING") {routeMode = "TRANSIT"; document.getElementById("ASDASDASD").innerHTML = "거리 정확성: 낮음";} else {routeMode = "DRIVING"; document.getElementById("ASDASDASD").innerHTML = "거리 정확성: 높음";}
-      console.log(routeMode)
+      if (routeMode == "DRIVING") {routeMode = "TRANSIT"; document.getElementById("DistanceButton").innerText = "거리 정확성: 낮음";} else {routeMode = "DRIVING"; document.getElementById("DistanceButton").innerText = "거리 정확성: 높음";}
+    })
+    //자가용 비교
+    const ifMove1 = document.getElementById("ifMove1")
+    const ifMove2 = document.getElementById("ifMove2")
+    const ulll = document.getElementById("ulll")
+
+    ifMove1.addEventListener("click", function() {
+      Case1 += 1
+      if (Case1 >= 3) {Case1=0}
+      switch(Case1){
+        case 0:
+          ifMove1.innerText = "자가용"
+          break
+        case 1:
+          ifMove1.innerText = "대중교통"
+          break
+        default:
+          ifMove1.innerText = "걷기"
+
+      }
+      calculateThings()
+    })
+    ifMove2.addEventListener("click", function() {
+      Case2 += 1
+      if (Case2 >= 3) {Case2=0}
+      switch(Case2){
+        case 0:
+          ifMove2.innerText = "자가용"
+          ulll.innerText = "을"
+          break
+        case 1:
+          ifMove2.innerText = "대중교통"
+          ulll.innerText = "을"
+          break
+        default:
+          ifMove2.innerText = "걷기"
+          ulll.innerText = "를"
+
+      }
+      calculateThings()
     })
 }
-
 
 window.initMap = initMap;
+function DisplayResult(Distance) {
 
-function DisplayResult() {
-  var arg1 = D * vehs[selectElement1.value]
-  var arg2 = D * vehs[selectElement2.value]
-  var res = arg1 - arg2
-  if (res < 0) {document.getElementById("Res").innerText = (-res) + "g의 탄소가 더 사용됩니다."} else {document.getElementById("Res").innerText = (res) + "g의 탄소가 절약됩니다."}
+  Grams[0] = Distance*carPerMeter
+  Grams[1] = Distance*busPerMeter
+
+  let carCO2string = Math.round(Grams[0])+"g"
+  let busCO2string = Math.round(Grams[1])+"g"
+
+  if (Grams[0] >= 1000){carCO2string = (Math.round(Grams[0]/100)/10)+"kg"}
+  if (Grams[1] >= 1000){busCO2string = (Math.round(Grams[1]/100)/10)+"kg"}
+
+  Times[0] = Distance/carSpeed
+  Times[1] = Distance/busSpeed
+  Times[2] = Distance/humanSpeed
+
+  let carTimestring = Math.round(Times[0])+"분"
+  let busTimestring = Math.round(Times[1])+"분"
+  let humanTimestring = Math.round(Times[2])+"분"
+
+  if (Times[0]>=60){ carTimestring = Math.round(Times[0]/60)+"시간 "+Math.floor(Times[0]%60)+"분" }
+  if (Times[1]>=60){ busTimestring = Math.round(Times[1]/60)+"시간 "+Math.floor(Times[1]%60)+"분" }
+  if (Times[2]>=60){ humanTimestring = Math.round(Times[2]/60)+"시간 "+Math.floor(Times[2]%60)+"분" }
+
+  document.getElementById("caseCar").innerText = "자가용을 이용하였을 때: "+carCO2string+", "+carTimestring
+  document.getElementById("caseBus").innerText = "대중교통을 이용하였을 때: "+busCO2string+", "+busTimestring
+  document.getElementById("caseWalk").innerText = "걸어간다면: "+humanTimestring
+  calculateThings()
 }
 
-function AChanged() {
-  console.log(D * vehs[selectElement1.value])
-  DisplayResult()
-}
-function BChanged() {
-  console.log(D * vehs[selectElement2.value])
-  if (selectElement2.value == 3) {document.getElementById("basictxtS").innerText = "을 이용한다면"} else {document.getElementById("basictxtS").innerText = "를 이용한다면"}
-  DisplayResult()
+function calculateThings(){
+  let RelGram = Grams[Case2] - Grams[Case1]
+  let RelTime = Times[Case2] - Times[Case1]
+
+  if (RelGram<0){
+    document.getElementById("resultG").innerText = "그리고 "+Math.round(-RelGram)+"g의 탄소 덜 사용됨."
+  }
+  else {
+    document.getElementById("resultG").innerText = "그리고 "+Math.round(RelGram)+"g의 탄소 더 사용됨."
+  }
+
+  if (RelTime<0){
+    document.getElementById("resultT").innerText = Math.round(-RelTime)+"분 덜 소요됨."
+  }
+  else {
+    document.getElementById("resultT").innerText = Math.round(RelTime)+"분 더 소요됨."
+  }
 }
