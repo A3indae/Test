@@ -110,6 +110,10 @@ h3 {
     display: flex;
     justify-content: space-between;
 }
+#bottomthing{
+    height: 100px;
+    text-align: center;
+}
 
 @media (max-width: 800px){
     body {
