@@ -53,6 +53,12 @@ h3 {
     font-size: 25px;
     line-height: 30px;
 }
+#other {
+    margin-top: 50px;
+    font-size: 25px;
+    line-height: 30px;
+    opacity: 0.5;
+}
 
 #infoIcon {
     width: 40px;
@@ -167,6 +173,13 @@ h3 {
         margin-top: 0;
         font-size: 10px;
         line-height: 15px;
+    }
+
+    #other {
+        margin-top: 25px;
+        font-size: 10px;
+        line-height: 15px;
+        opacity: 0.5;
     }
     
     #infoIcon {
